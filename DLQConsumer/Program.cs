@@ -75,7 +75,7 @@ static int GetRetryCount(Headers headers)
 
 static bool ShouldProcessMessage(string message)
 {
-    return !message.Contains("-retry") || Random.Shared.Next(1, 4) == 1;
+    return false; // Always fail for testing DLQ flow
 }
 
 async Task RetryMessage(string message, int retryCount)

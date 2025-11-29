@@ -37,7 +37,6 @@ try
                     Console.WriteLine(
                         $"[FAILED] Processing failed for: {messageValue} | Partition: {cr.Partition} | offset: {cr.Offset} | by {consumer.Name}"
                     );
-                    // Do not commit the offset for failed messages
                     Console.ResetColor();
                 }
                 else
@@ -46,8 +45,8 @@ try
                         $"[ACTIVE] Received: {cr.Message.Value} | Partition: {cr.Partition} | offset: {cr.Offset} | by {consumer.Name}"
                     );
                     Console.ResetColor();
-                    consumer.Commit(cr);
                 }
+                consumer.Commit(cr);
             }
         }
         catch (ConsumeException e)

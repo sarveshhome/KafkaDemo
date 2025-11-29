@@ -27,9 +27,19 @@ try
             var cr = consumer.Consume(TimeSpan.FromMilliseconds(100));
             if (cr != null)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"[ACTIVE] Received: {cr.Message.Value} | Partition: {cr.Partition}");
-                Console.ResetColor();
+                var messageValue = cr.Message.Value;
+                if (messageValue.EndsWith("-failed"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"[FAILED] Processing failed for: {messageValue} | Partition: {cr.Partition} | offset: {cr.Offset}");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"[ACTIVE] Received: {messageValue} | Partition: {cr.Partition} | offset: {cr.Offset}");
+                    Console.ResetColor();
+                }
                 consumer.Commit(cr);
             }
         }

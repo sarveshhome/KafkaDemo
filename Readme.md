@@ -60,3 +60,88 @@ In separate terminals, run the following commands:
 dotnet run --project DLQConsumer
 dotnet run --project DLQMonitor
 ```
+
+
+### Interview question
+
+1. You have 3 partitions and 6 consumers — how does Kafka distribute?
+
+    Kafka works on one rule:
+
+    One partition → max ONE consumer in a consumer group.
+
+    So with 3 partitions and 6 consumers in the same consumer group:
+
+    ✔ Only 3 consumers will get assigned (1 per partition)
+    ✔ Remaining 3 consumers will stay idle (no messages)
+
+
+
+| Partition   | Assigned to Consumer |
+| ----------- | -------------------- |
+| Partition 0 | Consumer 1           |
+| Partition 1 | Consumer 2           |
+| Partition 2 | Consumer 3           |
+| Partition 3 | ❌ No such partition  |
+| Partition 4 | ❌ No such partition  |
+| Partition 5 | ❌ No such partition  |
+
+
+
+
+1. Difference between Kafka Streams vs Consumer API?
+
+Streams → real-time processing, windowing, state store.
+
+Kafka consumer API → simple message consumption; stateless.
+
+
+2. How do you design Retry + DLQ Architecture?
+
+Answer:
+
+Main Topic → Process
+
+On exception → Retry topic
+
+Max retries → DLQ topic
+
+Operator manually replays DLQ messages
+
+
+3. How do you ensure message ordering in Kafka?
+
+
+Answer: 
+
+Use same key for related messages → same partition → ordered consumption.
+
+
+
+4. How do you monitor Kafka consumers?
+Answer: 
+Use Kafka monitoring tools (e.g., Confluent Control Center, Prometheus + Grafana) to track consumer lag, throughput, and errors.
+
+5. How do you handle schema evolution in Kafka?
+
+Answer:
+Use a schema registry (e.g., Confluent Schema Registry) to manage and evolve schemas
+without breaking compatibility.
+
+
+How to use all 6 consumers?
+✔ Increase partitions to at least 6.
+
+Do consumers in different groups get all messages?
+✔ Yes, each group has its own copy.
+
+If one consumer dies, what happens?
+✔ Rebalance → idle consumer takes the partition.
+
+
+### prompt
+
+if you search in openAI , or other AI, then you should ask question
+
+Give me a prompt template of the above result
+

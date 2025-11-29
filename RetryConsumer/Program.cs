@@ -38,7 +38,12 @@ try
                 Console.ResetColor();
                 
                 var retryMessage = message.Replace("-failed", "-retry");
-                await producer.ProduceAsync(RetryTopicName, new Message<Null, string> { Value = retryMessage });
+                var headers = new Headers { { "retry-count", System.Text.Encoding.UTF8.GetBytes("0") } };
+                await producer.ProduceAsync(RetryTopicName, new Message<Null, string> 
+                { 
+                    Value = retryMessage, 
+                    Headers = headers 
+                });
                 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"[RETRY] Sent to retry topic: {retryMessage}");

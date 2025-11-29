@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consumer3", "Consumer3\Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetryConsumer", "RetryConsumer\RetryConsumer.csproj", "{7049D394-EF18-4825-BC92-13B47AFCA659}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLQConsumer", "DLQConsumer\DLQConsumer.csproj", "{8049D394-EF18-4825-BC92-13B47AFCA660}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLQMonitor", "DLQMonitor\DLQMonitor.csproj", "{9049D394-EF18-4825-BC92-13B47AFCA661}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +52,13 @@ Global
 		{7049D394-EF18-4825-BC92-13B47AFCA659}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7049D394-EF18-4825-BC92-13B47AFCA659}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7049D394-EF18-4825-BC92-13B47AFCA659}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8049D394-EF18-4825-BC92-13B47AFCA660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8049D394-EF18-4825-BC92-13B47AFCA660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8049D394-EF18-4825-BC92-13B47AFCA660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8049D394-EF18-4825-BC92-13B47AFCA660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9049D394-EF18-4825-BC92-13B47AFCA661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9049D394-EF18-4825-BC92-13B47AFCA661}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9049D394-EF18-4825-BC92-13B47AFCA661}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9049D394-EF18-4825-BC92-13B47AFCA661}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

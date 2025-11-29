@@ -1,0 +1,43 @@
+name: CD
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+    
+    - name: Build Release
+      run: dotnet build --configuration Release
+    
+    - name: Publish Applications
+      run: |
+        dotnet publish Publisher1/Publisher1.csproj -c Release -o ./publish/Publisher1
+        dotnet publish Publisher2/Publisher2.csproj -c Release -o ./publish/Publisher2
+        dotnet publish Consumer1/Consumer1.csproj -c Release -o ./publish/Consumer1
+        dotnet publish Consumer2/Consumer2.csproj -c Release -o ./publish/Consumer2
+        dotnet publish Consumer3/Consumer3.csproj -c Release -o ./publish/Consumer3
+        dotnet publish RetryConsumer/RetryConsumer.csproj -c Release -o ./publish/RetryConsumer
+        dotnet publish DLQConsumer/DLQConsumer.csproj -c Release -o ./publish/DLQConsumer
+        dotnet publish DLQMonitor/DLQMonitor.csproj -c Release -o ./publish/DLQMonitor
+    
+    - name: Create Docker Images
+      run: |
+        docker build -t kafka-demo/publisher1:${{ github.sha }} -f Publisher1/Dockerfile .
+        docker build -t kafka-demo/consumer1:${{ github.sha }} -f Consumer1/Dockerfile .
+        docker build -t kafka-demo/dlq-consumer:${{ github.sha }} -f DLQConsumer/Dockerfile .
+    
+    - name: Deploy to Production
+      run: echo "Deploy to production environment"
